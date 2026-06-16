@@ -14,7 +14,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
     <header className="border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
         <div>
-          <p className="text-sm font-semibold tracking-[0.2em] text-slate-500 uppercase">
+          <p className="text-sm font-semibold tracking-wide text-slate-500">
             Immigration Law
           </p>
           <Link

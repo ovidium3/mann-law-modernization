@@ -27,6 +27,14 @@ const emptyLead: LeadFormData = {
   caseSummary: "",
 };
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function isValidPhone(phone: string) {
+  return /^\+?[0-9()\-.\s]{7,20}$/.test(phone.trim());
+}
+
 function generateAssistantReply(input: string) {
   const normalized = input.toLowerCase();
   const matchedService = serviceHints.find((hint) =>
@@ -50,8 +58,8 @@ export function FloatingIntakeAssistant() {
   const canSubmitLead = useMemo(() => {
     return (
       lead.name.trim().length > 1 &&
-      lead.email.includes("@") &&
-      lead.phone.trim().length > 6 &&
+      isValidEmail(lead.email) &&
+      isValidPhone(lead.phone) &&
       lead.caseSummary.trim().length > 10
     );
   }, [lead]);
@@ -146,7 +154,11 @@ export function FloatingIntakeAssistant() {
               </p>
             ) : (
               <>
+                <label htmlFor="assistant-lead-name" className="text-xs font-medium text-slate-600">
+                  Name
+                </label>
                 <input
+                  id="assistant-lead-name"
                   type="text"
                   placeholder="Name"
                   value={lead.name}
@@ -155,7 +167,11 @@ export function FloatingIntakeAssistant() {
                   }
                   className="w-full rounded-md border border-slate-300 p-2 text-sm"
                 />
+                <label htmlFor="assistant-lead-email" className="text-xs font-medium text-slate-600">
+                  Email
+                </label>
                 <input
+                  id="assistant-lead-email"
                   type="email"
                   placeholder="Email"
                   value={lead.email}
@@ -164,7 +180,11 @@ export function FloatingIntakeAssistant() {
                   }
                   className="w-full rounded-md border border-slate-300 p-2 text-sm"
                 />
+                <label htmlFor="assistant-lead-phone" className="text-xs font-medium text-slate-600">
+                  Phone
+                </label>
                 <input
+                  id="assistant-lead-phone"
                   type="tel"
                   placeholder="Phone"
                   value={lead.phone}
@@ -173,7 +193,11 @@ export function FloatingIntakeAssistant() {
                   }
                   className="w-full rounded-md border border-slate-300 p-2 text-sm"
                 />
+                <label htmlFor="assistant-lead-summary" className="text-xs font-medium text-slate-600">
+                  Brief case summary
+                </label>
                 <textarea
+                  id="assistant-lead-summary"
                   placeholder="Brief case summary"
                   value={lead.caseSummary}
                   onChange={(event) =>

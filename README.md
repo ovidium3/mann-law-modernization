@@ -4,7 +4,7 @@ A production-style modernization project for a legal services website using **Ne
 
 ## Phase 1 — Website Audit Report
 
-> Note: Direct automated retrieval of `https://mannlawgrp.com/` from this environment failed due network access limitations. The audit below is structured as a professional modernization audit framework and should be validated against a live crawl (Lighthouse + accessibility scans + analytics baseline) in a connected environment.
+> Note: Direct automated retrieval of `https://mannlawgrp.com/` from this environment failed due to network access limitations. The audit below is structured as a professional modernization audit framework and should be validated against a live crawl (Lighthouse + accessibility scans + analytics baseline) in a connected environment.
 
 ### Structured findings
 

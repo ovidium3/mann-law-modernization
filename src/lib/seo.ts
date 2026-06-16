@@ -4,6 +4,13 @@ import type { Locale } from "@/lib/i18n";
 import { locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
+const ogLocaleMap: Record<Locale, string> = {
+  en: "en_US",
+  es: "es_ES",
+  uk: "uk_UA",
+  ro: "ro_RO",
+};
+
 export function localeAlternates(path = "") {
   const languages = Object.fromEntries(
     locales.map((locale) => [locale, `/${locale}${path}`]),
@@ -39,7 +46,7 @@ export function makeMetadata({
       url: absoluteUrl,
       type: "website",
       siteName: site.name,
-      locale,
+      locale: ogLocaleMap[locale],
     },
     twitter: {
       card: "summary_large_image",
