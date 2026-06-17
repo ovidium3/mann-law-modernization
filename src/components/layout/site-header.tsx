@@ -45,7 +45,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                     : "border-slate-300 text-slate-600 hover:border-blue-200 hover:text-blue-700"
                 }`}
                 hrefLang={item}
-                locale={false}
+                //locale={false}
               >
                 {localeLabels[item]}
               </Link>
