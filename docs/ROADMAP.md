@@ -37,7 +37,7 @@ Items marked **(stretch)** are learning-maximizing extras — skip them if scope
 - [ ] `OPENAI_API_KEY` as a Cloudflare secret; gpt-4o-mini wired up. **Resume**
 - [ ] System prompt: general immigration guidance, enforced legal disclaimer, field-collection behavior. **Resume**
 - [ ] **D1** leads table + **KV** transcript storage. **Resume**
-- [ ] **Resend** email notification to the firm on each new lead. **Demo / Resume**
+- [ ] **Cloudflare Worker** handles intake/contact submissions → notification (email via Resend first; **SMS / WhatsApp as stretch** channels). **Demo / Resume**
 - [ ] Rewrite `FloatingIntakeAssistant`: real `fetch` calls, `sessionId`, loading/error states, `sessionStorage` persistence. **Demo**
 
 **Exit demo:** ask the assistant a real immigration question and get a genuine answer; submit an intake form; a lead email arrives in the firm's inbox seconds later.
@@ -48,18 +48,23 @@ Items marked **(stretch)** are learning-maximizing extras — skip them if scope
 *Turns "it works" into "this feels like a real product."*
 
 - [ ] Streaming responses via the Vercel **AI SDK** (`ai`) — ChatGPT-style typewriter effect. **Demo / Resume**
-- [ ] **Lead admin view** reading from D1 (simple password-protected page). **Demo / Resume**
+- [ ] **Admin panel** reading from D1: **Google Auth restricted to an email allowlist** (not a shared password), listing captured leads. **Demo / Resume**
+  - Replaces the existing site's exposed admin route with a properly authenticated one — a concrete security improvement to point to.
+- [ ] Surface **Google Search Console** data in the admin panel (top queries, impressions, average position). **Demo / Resume**
 - [ ] Mobile UX pass — the stakeholder will likely demo on a phone. **Demo**
 
-**Exit demo:** show streamed AI responses on mobile, then open the admin page listing every captured lead.
+**Exit demo:** sign in with Google, show the lead list and Search Console insights, all on mobile with streamed AI responses.
 
 ---
 
 ## Phase 3 — Reach & credibility
 *Builds on scaffolding already in the repo (`/en /es /uk /ro` routing, analytics placeholders, sitemap/robots).*
 
-- [ ] Finish multilingual content + a visible **language switcher**. **Demo / Resume**
-  - Immigration clients are often multilingual — a concrete business fit, not just a tech flex.
+- [ ] **Scale to 50+ languages via an OpenAI Batch translation pipeline.** **Demo / Resume**
+  - Extract translatable strings → submit one **GPT-4o-mini Batch job** (async, up to 24h, ~$1–2 total vs. per-request cost) → poll for completion → ingest results into the i18n message files. The async-job pattern (submit / poll / process) is itself the resume value.
+  - Expands `locales` in `src/lib/i18n.ts` far beyond the current 4; keep the `Record<Locale, …>` maps and sitemap `paths` in sync.
+- [ ] Visible **language switcher** wired to the full locale set. **Demo / Resume**
+  - Immigration clients are often multilingual — a concrete business fit, not just a tech flex. "The site speaks 50+ languages" is a standout demo line.
 - [ ] Structured data you can *explain*: JSON-LD `LegalService` + `FAQPage` schema. **Demo / Resume**
   - A Google Rich Results test screenshot is very legible to a non-engineer.
 - [ ] Wire `AnalyticsPlaceholders` to real GA4. **Demo**
@@ -78,7 +83,8 @@ Items marked **(stretch)** are learning-maximizing extras — skip them if scope
 
 ## Stakeholder demo framing
 
-Two reminders for the review with the current site's author:
+Three reminders for the review with the current site's author:
 
 1. **Additive, not critical.** Present capabilities the site *could gain* (instant AI intake, multilingual reach, lead tracking) — a collaborative modernization prototype, not a critique. He decides whether to adopt.
 2. **Lead with business outcomes, close with the tech.** Open with the email-arrives-instantly moment and the live language switch. Mention Cloudflare / D1 / OpenAI only if asked — the engineering depth is for your resume and interviews; for him it's "you won't miss leads, and clients get answers in their language 24/7."
+3. **Handle the security points responsibly.** The current site references its admin route in client-side source and exposes config; the prototype secures admin behind Google Auth. Frame this only from publicly observable behavior, as an improvement the new build provides — never as a probe of the live site or a criticism of its author.
