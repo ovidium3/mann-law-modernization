@@ -1,0 +1,30 @@
+# Local development secrets — Cloudflare Pages / Functions read these from `.dev.vars`.
+#
+# Setup:
+#   1. Copy this file to `.dev.vars`  (cp .dev.vars.example .dev.vars)
+#   2. Fill in real values. `.dev.vars` is gitignored — never commit it.
+#   3. For deploys, set the SAME keys as encrypted variables in the
+#      Cloudflare Pages dashboard (Settings → Environment variables),
+#      separately for Production and Preview.
+#
+# Public values (NEXT_PUBLIC_*) are build-time and may live in .env instead;
+# they are listed here only as a reminder of what the app reads.
+
+# --- Phase 1: AI assistant + lead capture ---
+# OpenAI API key for the /api/intake/chat assistant (gpt-4o-mini).
+OPENAI_API_KEY=""
+# Resend API key for lead-notification email to the firm.
+RESEND_API_KEY=""
+
+# --- Phase 2: admin panel (Google Auth) ---
+# OAuth client credentials for Google sign-in, restricted to an email allowlist.
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+# Comma-separated list of emails allowed into the admin panel.
+ADMIN_ALLOWLIST=""
+
+# --- Analytics (public, optional) ---
+# These are build-time public vars consumed by AnalyticsPlaceholders.
+# NEXT_PUBLIC_GA_MEASUREMENT_ID=""
+# NEXT_PUBLIC_GSC_VERIFICATION_TOKEN=""
+# NEXT_PUBLIC_CONVERSION_LABEL=""
