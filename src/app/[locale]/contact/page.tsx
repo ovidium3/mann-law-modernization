@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { ContactForms } from "@/components/contact/contact-forms";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -42,46 +43,7 @@ export default async function ContactPage({
         </p>
       </header>
 
-      <section className="grid gap-6 md:grid-cols-2">
-        <form className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-semibold text-slate-900">Contact Form</h2>
-          <input type="text" required placeholder="Full name" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <input type="email" required placeholder="Email" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <input type="tel" required placeholder="Phone" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <textarea
-            required
-            placeholder="How can we help?"
-            className="h-28 w-full rounded-md border border-slate-300 p-2 text-sm"
-          />
-          <button type="submit" className="rounded-full bg-blue-700 px-5 py-2 text-sm font-semibold text-white">
-            Send Message
-          </button>
-        </form>
-
-        <form className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-semibold text-slate-900">Consultation Request</h2>
-          <input type="text" required placeholder="Name" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <input type="email" required placeholder="Email" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <input type="tel" required placeholder="Phone" className="w-full rounded-md border border-slate-300 p-2 text-sm" />
-          <select required className="w-full rounded-md border border-slate-300 p-2 text-sm">
-            <option value="">Select practice area</option>
-            <option>Family-based immigration</option>
-            <option>Employment-based immigration</option>
-            <option>Green cards</option>
-            <option>Citizenship and naturalization</option>
-            <option>Visa services</option>
-            <option>Deportation defense</option>
-          </select>
-          <textarea
-            required
-            placeholder="Brief case summary"
-            className="h-28 w-full rounded-md border border-slate-300 p-2 text-sm"
-          />
-          <button type="submit" className="rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white">
-            Request Consultation
-          </button>
-        </form>
-      </section>
+      <ContactForms />
 
       <section className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-6 md:grid-cols-2">
         <div>
@@ -97,10 +59,14 @@ export default async function ContactPage({
           </ul>
         </div>
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Map Placeholder</h2>
-          <div className="mt-2 flex h-48 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-sm text-slate-500">
-            Interactive map integration placeholder
-          </div>
+          <h2 className="text-lg font-semibold text-slate-900">Find Our Office</h2>
+          <iframe
+            title={`Map showing ${site.name} at ${site.address}`}
+            src={`https://www.google.com/maps?q=${encodeURIComponent(site.address)}&output=embed`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="mt-2 h-48 w-full rounded-xl border border-slate-200"
+          />
         </div>
       </section>
     </div>

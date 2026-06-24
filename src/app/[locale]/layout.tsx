@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FloatingIntakeAssistant } from "@/components/ai/floating-intake-assistant";
+import { HtmlLangSync } from "@/components/layout/html-lang-sync";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
@@ -43,6 +44,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <div className="min-h-screen">
+      <HtmlLangSync locale={activeLocale} />
       <SiteHeader locale={activeLocale} />
       <main>{children}</main>
       <SiteFooter locale={activeLocale} />
