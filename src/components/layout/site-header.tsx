@@ -19,8 +19,8 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           aria-label={`${site.name} — home`}
           className="flex items-center gap-3"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#1a3a52] font-serif text-base font-bold text-white">
-            ML
+          <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#1a3a52] font-serif text-lg font-bold text-white">
+            M
           </span>
           <span className="leading-tight">
             <span className="block font-serif text-lg font-bold text-slate-900">
