@@ -95,9 +95,9 @@ export default async function LocaleHomePage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-20 px-4 py-10 sm:px-6 lg:px-8">
+    <>
       {/* 1. Hero — full-bleed background photo with navy overlay */}
-      <section className="relative overflow-hidden rounded-sm">
+      <section className="relative overflow-hidden">
         <Image
           src="/images/hero.jpg"
           alt=""
@@ -115,11 +115,11 @@ export default async function LocaleHomePage({
             background: `linear-gradient(90deg, ${NAVY}f2 0%, ${NAVY}d9 45%, ${NAVY}73 100%)`,
           }}
         />
-        <div className="relative px-8 py-16 text-white md:px-12 md:py-24">
+        <div className="relative mx-auto max-w-6xl px-4 py-20 text-white sm:px-6 md:py-28 lg:px-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">
             Immigration · Nationality · Legacy
           </p>
-          <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight md:text-5xl">
+          <h1 className="mt-4 max-w-2xl font-serif text-4xl font-bold leading-tight md:text-5xl">
             Your American Dream, Defended.
           </h1>
           <p className="mt-4 max-w-xl text-base text-slate-200 md:text-lg">
@@ -153,11 +153,12 @@ export default async function LocaleHomePage({
         </div>
       </section>
 
+      <div className="mx-auto w-full max-w-6xl space-y-20 px-4 py-16 sm:px-6 lg:px-8">
       {/* 2. Who We Are */}
       <section className="space-y-8">
         <div className="max-w-2xl">
           <p className={eyebrow}>Who We Are</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+          <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
             45+ years serving immigrant communities
           </h2>
           <p className="mt-4 text-base text-slate-600">
@@ -189,7 +190,7 @@ export default async function LocaleHomePage({
       <section className="space-y-6">
         <div>
           <p className={eyebrow}>What We Do</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">Practice areas</h2>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">Practice areas</h2>
         </div>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
@@ -230,7 +231,7 @@ export default async function LocaleHomePage({
       <section className="rounded-sm bg-slate-50 p-8 md:p-12">
         <div>
           <p className={eyebrow}>How It Works</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+          <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
             A clear path, four steps
           </h2>
         </div>
@@ -254,7 +255,7 @@ export default async function LocaleHomePage({
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <p className={eyebrow}>Testimonials</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900">
+            <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
               What clients say
             </h2>
           </div>
@@ -278,7 +279,7 @@ export default async function LocaleHomePage({
       <section className="rounded-sm bg-slate-50 p-8 md:p-12">
         <div>
           <p className={eyebrow}>FAQ</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+          <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
             Common questions
           </h2>
         </div>
@@ -303,7 +304,7 @@ export default async function LocaleHomePage({
         className="rounded-sm px-8 py-14 text-center text-white md:px-12"
         style={{ backgroundColor: NAVY }}
       >
-        <h2 className="text-3xl font-bold">Ready to take the next step?</h2>
+        <h2 className="font-serif text-3xl font-bold">Ready to take the next step?</h2>
         <p className="mx-auto mt-3 max-w-xl text-base text-slate-300">
           Complete a short intake form and receive next-step guidance from our team.
         </p>
@@ -317,6 +318,7 @@ export default async function LocaleHomePage({
           </Link>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
