@@ -53,11 +53,11 @@ const faqs = [
 // rounded-rectangle buttons, soft shadow cards (no heavy borders).
 const NAVY = "#1a3a52";
 const eyebrow = "text-xs font-semibold uppercase tracking-[0.2em] text-[#1a3a52]";
-const card = "rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-100";
+const card = "rounded-sm bg-white p-6 shadow-sm ring-1 ring-slate-100";
 const btnPrimaryOnDark =
-  "inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#1a3a52] transition hover:bg-slate-100";
+  "inline-flex items-center justify-center gap-2 rounded-sm bg-white px-6 py-3 text-sm font-semibold text-[#1a3a52] transition hover:bg-slate-100";
 const btnOutlineOnDark =
-  "inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10";
+  "inline-flex items-center justify-center gap-2 rounded-sm border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10";
 
 function Arrow() {
   return (
@@ -97,7 +97,7 @@ export default async function LocaleHomePage({
   return (
     <div className="mx-auto w-full max-w-6xl space-y-20 px-4 py-10 sm:px-6 lg:px-8">
       {/* 1. Hero — full-bleed background photo with navy overlay */}
-      <section className="relative overflow-hidden rounded-3xl">
+      <section className="relative overflow-hidden rounded-sm">
         <Image
           src="/images/hero.jpg"
           alt=""
@@ -165,7 +165,7 @@ export default async function LocaleHomePage({
             client-first approach at every stage of your case.
           </p>
         </div>
-        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl">
+        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-sm">
           <Image
             src="/images/team.jpg"
             alt="The Mann Law Group attorneys"
@@ -195,7 +195,7 @@ export default async function LocaleHomePage({
           {services.map((service) => (
             <article
               key={service.name}
-              className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
+              className="group overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">
                 <Image
@@ -204,7 +204,7 @@ export default async function LocaleHomePage({
                   fill
                   unoptimized
                   sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                  className="object-cover transition duration-300 group-hover:scale-105"
+                  className="object-cover"
                 />
               </div>
               <div className="p-6">
@@ -227,7 +227,7 @@ export default async function LocaleHomePage({
       </section>
 
       {/* 4. How It Works — light-gray panel with large muted numerals */}
-      <section className="rounded-3xl bg-slate-50 p-8 md:p-12">
+      <section className="rounded-sm bg-slate-50 p-8 md:p-12">
         <div>
           <p className={eyebrow}>How It Works</p>
           <h2 className="mt-3 text-3xl font-bold text-slate-900">
@@ -275,7 +275,7 @@ export default async function LocaleHomePage({
       </section>
 
       {/* 6. FAQ Preview — light-gray panel */}
-      <section className="rounded-3xl bg-slate-50 p-8 md:p-12">
+      <section className="rounded-sm bg-slate-50 p-8 md:p-12">
         <div>
           <p className={eyebrow}>FAQ</p>
           <h2 className="mt-3 text-3xl font-bold text-slate-900">
@@ -300,7 +300,7 @@ export default async function LocaleHomePage({
 
       {/* 7. Closing CTA */}
       <section
-        className="rounded-3xl px-8 py-14 text-center text-white md:px-12"
+        className="rounded-sm px-8 py-14 text-center text-white md:px-12"
         style={{ backgroundColor: NAVY }}
       >
         <h2 className="text-3xl font-bold">Ready to take the next step?</h2>
