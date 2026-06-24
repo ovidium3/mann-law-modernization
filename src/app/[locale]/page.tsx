@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 
+// Practice areas aligned to the reference site and the supplied photography.
 const services = [
-  "Family-based immigration",
-  "Employment-based immigration",
-  "Green cards",
-  "Citizenship and naturalization",
-  "Visa services",
-  "Deportation defense",
+  { name: "Asylum", img: "/images/practice/asylum.webp" },
+  { name: "Deportation Defense", img: "/images/practice/deportation-defense.webp" },
+  { name: "Family Immigration", img: "/images/practice/family-immigration.jpg" },
+  { name: "Green Cards", img: "/images/practice/green-cards.jpg" },
+  { name: "Naturalization & Citizenship", img: "/images/practice/naturalization.jpg" },
+  { name: "Waivers", img: "/images/practice/waivers.jpg" },
 ];
 
 const differentiators = [
@@ -65,29 +67,6 @@ function Arrow() {
   );
 }
 
-// Swappable image placeholder sized to the final layout. Replace with a real
-// <Image>/<img> once licensed photography is available — surrounding layout is
-// sized so no reflow occurs on swap.
-function ImagePlaceholder({
-  label,
-  className = "",
-}: {
-  label: string;
-  className?: string;
-}) {
-  return (
-    <div
-      role="img"
-      aria-label={`Placeholder image: ${label}`}
-      className={`flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 ${className}`}
-    >
-      <span className="px-3 text-center text-xs font-medium tracking-wide text-slate-400 uppercase">
-        {label}
-      </span>
-    </div>
-  );
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -117,19 +96,17 @@ export default async function LocaleHomePage({
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-20 px-4 py-10 sm:px-6 lg:px-8">
-      {/* 1. Hero — full-bleed background photo with dark overlay */}
+      {/* 1. Hero — full-bleed background photo with navy overlay */}
       <section className="relative overflow-hidden rounded-3xl">
-        {/* Background photo placeholder (swap for <Image fill /> later). */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-500"
+        <Image
+          src="/images/hero.jpg"
+          alt=""
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover"
         />
-        <span
-          aria-hidden
-          className="absolute right-4 top-4 rounded-full bg-black/30 px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-white/70"
-        >
-          Hero photo placeholder
-        </span>
         {/* Legibility overlay. */}
         <div
           aria-hidden
@@ -178,21 +155,25 @@ export default async function LocaleHomePage({
 
       {/* 2. Who We Are */}
       <section className="space-y-8">
-        <div className="grid items-center gap-8 md:grid-cols-2">
-          <ImagePlaceholder
-            label="Team / office photo"
-            className="order-last aspect-[4/3] w-full md:order-first"
+        <div className="max-w-2xl">
+          <p className={eyebrow}>Who We Are</p>
+          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+            45+ years serving immigrant communities
+          </h2>
+          <p className="mt-4 text-base text-slate-600">
+            An immigration-focused practice built on clarity, strategy, and a
+            client-first approach at every stage of your case.
+          </p>
+        </div>
+        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl">
+          <Image
+            src="/images/team.jpg"
+            alt="The Mann Law Group attorneys"
+            fill
+            unoptimized
+            sizes="(min-width: 1024px) 1024px, 100vw"
+            className="object-cover"
           />
-          <div>
-            <p className={eyebrow}>Who We Are</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900">
-              45+ years serving immigrant communities
-            </h2>
-            <p className="mt-4 text-base text-slate-600">
-              An immigration-focused practice built on clarity, strategy, and a
-              client-first approach at every stage of your case.
-            </p>
-          </div>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
           {differentiators.map((item) => (
@@ -213,15 +194,21 @@ export default async function LocaleHomePage({
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
             <article
-              key={service}
+              key={service.name}
               className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
             >
-              <ImagePlaceholder
-                label={service}
-                className="aspect-[16/10] w-full rounded-none"
-              />
+              <div className="relative aspect-[16/10] w-full overflow-hidden">
+                <Image
+                  src={service.img}
+                  alt={service.name}
+                  fill
+                  unoptimized
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition duration-300 group-hover:scale-105"
+                />
+              </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-slate-900">{service}</h3>
+                <h3 className="text-lg font-semibold text-slate-900">{service.name}</h3>
                 <p className="mt-2 text-sm text-slate-600">
                   Structured case planning and documentation support tailored to
                   your goals.
