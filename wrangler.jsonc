@@ -12,8 +12,12 @@
   },
   "observability": {
     "enabled": true
+  },
+  // Workers AI powers the /api/intake/chat assistant (CHAT_PROVIDER=cloudflare).
+  "ai": {
+    "binding": "AI"
   }
-  // Phase 1 will add bindings here: D1 (leads), KV (transcripts).
+  // Phase 1 will add more bindings here: D1 (leads), KV (transcripts).
   // Secrets (OPENAI_API_KEY, RESEND_API_KEY, ...) are NOT set here — they go
   // in `.dev.vars` locally and the Workers dashboard for deploys.
 }
