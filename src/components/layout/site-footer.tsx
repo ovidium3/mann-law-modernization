@@ -97,10 +97,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs text-slate-400 sm:px-6 lg:px-8">
           <p>© {year} {site.name}. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href={`/${locale}/privacy`} className="transition hover:text-white">
+            <Link href={`/${locale}/privacy`} className="font-medium text-slate-300 transition hover:text-white">
               Privacy Policy
             </Link>
-            <Link href={`/${locale}/terms`} className="transition hover:text-white">
+            <Link href={`/${locale}/terms`} className="font-medium text-slate-300 transition hover:text-white">
               Disclaimer
             </Link>
           </div>
