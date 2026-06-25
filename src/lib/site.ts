@@ -6,14 +6,20 @@ export const site = {
   title: "Mann Law Group | Immigration Law Services",
   description:
     "Modern immigration law services for families, professionals, and employers. Schedule a consultation with Mann Law Group.",
-  phone: "(248) 555-0142",
-  email: "intake@mannlawgrp.com",
-  address: "123 Main Street, Suite 400, Bloomfield Hills, MI 48302",
+  phone: "(248) 932-0990",
+  fax: "(248) 932-4971",
+  email: "info@mannlawgrp.com",
+  address: "33505 W. 14 Mile Rd., Suite 20, Farmington Hills, MI 48331",
   hours: [
-    "Monday–Friday: 8:30 AM – 6:00 PM",
-    "Saturday: By Appointment",
-    "Sunday: Closed",
+    "Monday–Friday: 9:00 AM – 5:00 PM",
+    "Saturday–Sunday: Closed",
   ],
+  social: {
+    facebook: "https://www.facebook.com/immigrationlawyers/",
+    instagram: "https://www.instagram.com/mannlawgrp/",
+    linkedin: "https://www.linkedin.com/company/george-p.-mann-&-associates-pc/",
+    youtube: "https://www.youtube.com/channel/UComc16KSrNsPk2Z5d3Kh70Q",
+  },
 } as const;
 
 export type NavItem = {

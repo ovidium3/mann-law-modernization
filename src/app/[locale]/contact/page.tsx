@@ -35,19 +35,24 @@ export default async function ContactPage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-8 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-5xl space-y-8 px-4 py-16 sm:px-6 lg:px-8">
       <header className="space-y-3">
-        <h1 className="text-3xl font-semibold text-slate-900">Contact & Consultation Requests</h1>
-        <p className="text-sm text-slate-600">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1a3a52]">
+          Contact
+        </p>
+        <h1 className="font-serif text-4xl font-bold text-slate-900">
+          Contact &amp; Consultation Requests
+        </h1>
+        <p className="text-base text-slate-600">
           Use the forms below to contact our office and request a consultation.
         </p>
       </header>
 
       <ContactForms />
 
-      <section className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-6 md:grid-cols-2">
+      <section className="grid gap-6 rounded-sm border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Office Information</h2>
+          <h2 className="font-serif text-lg font-bold text-slate-900">Office Information</h2>
           <p className="mt-2 text-sm text-slate-700">{site.address}</p>
           <p className="mt-1 text-sm text-slate-700">{site.phone}</p>
           <p className="mt-1 text-sm text-slate-700">{site.email}</p>
@@ -59,13 +64,13 @@ export default async function ContactPage({
           </ul>
         </div>
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Find Our Office</h2>
+          <h2 className="font-serif text-lg font-bold text-slate-900">Find Our Office</h2>
           <iframe
             title={`Map showing ${site.name} at ${site.address}`}
             src={`https://www.google.com/maps?q=${encodeURIComponent(site.address)}&output=embed`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="mt-2 h-48 w-full rounded-xl border border-slate-200"
+            className="mt-2 h-48 w-full rounded-sm border border-slate-200"
           />
         </div>
       </section>
