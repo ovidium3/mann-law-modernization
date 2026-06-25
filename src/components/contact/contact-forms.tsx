@@ -116,7 +116,7 @@ function ConsultationForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className={formClass}>
+    <form id="consultation" onSubmit={handleSubmit} noValidate className={`scroll-mt-28 ${formClass}`}>
       <h2 className={headingClass}>Consultation Request</h2>
       {submitted ? (
         <SubmittedNotice />
