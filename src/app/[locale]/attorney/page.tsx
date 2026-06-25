@@ -7,17 +7,16 @@ import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-// NOTE: Names come from the supplied headshots; roles are PLACEHOLDERS pending
-// the firm's real titles/bios. George P. Mann is listed first as the firm's
-// namesake — confirm his actual title.
+// Names + titles sourced from mannlawgrp.com/our-people (ordered by seniority).
+// Individual bios are not yet published here — add when the firm provides them.
 const attorneys = [
-  { name: "George P. Mann", role: "Founding Attorney", img: "/images/attorneys/George-P.-Mann.png" },
-  { name: "Aleksandra Dragovic", role: "Immigration Attorney", img: "/images/attorneys/Aleksandra-Dragovic.png" },
-  { name: "Moses A. El-Sayed", role: "Immigration Attorney", img: "/images/attorneys/Moses-A.-El-Sayed.png" },
-  { name: "Nadine Kassem", role: "Immigration Attorney", img: "/images/attorneys/Nadine-Kassem.png" },
-  { name: "Oana C. Marina", role: "Immigration Attorney", img: "/images/attorneys/Oana-C.-Marina.png" },
-  { name: "Rachel Lehr", role: "Immigration Attorney", img: "/images/attorneys/Rachel-Lehr.png" },
-  { name: "Rebecca Rook", role: "Immigration Attorney", img: "/images/attorneys/Rebecca-Rook.png" },
+  { name: "George P. Mann", role: "Founder & Managing Partner", img: "/images/attorneys/George-P.-Mann.png" },
+  { name: "Oana C. Marina", role: "Partner", img: "/images/attorneys/Oana-C.-Marina.png" },
+  { name: "Aleksandra Dragovic", role: "Partner", img: "/images/attorneys/Aleksandra-Dragovic.png" },
+  { name: "Moses A. El-Sayed", role: "Partner", img: "/images/attorneys/Moses-A.-El-Sayed.png" },
+  { name: "Nadine Kassem", role: "Partner", img: "/images/attorneys/Nadine-Kassem.png" },
+  { name: "Rachel Lehr", role: "Senior Associate", img: "/images/attorneys/Rachel-Lehr.png" },
+  { name: "Rebecca Rook", role: "Senior Associate", img: "/images/attorneys/Rebecca-Rook.png" },
 ];
 
 const attorneyProfile = {

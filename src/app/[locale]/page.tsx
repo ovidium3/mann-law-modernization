@@ -7,13 +7,14 @@ import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 
 // Practice areas aligned to the reference site and the supplied photography.
+// `slug` deep-links each card to its section on the Practice Areas page.
 const services = [
-  { name: "Asylum", img: "/images/practice/asylum.webp" },
-  { name: "Deportation Defense", img: "/images/practice/deportation-defense.webp" },
-  { name: "Family Immigration", img: "/images/practice/family-immigration.jpg" },
-  { name: "Green Cards", img: "/images/practice/green-cards.jpg" },
-  { name: "Naturalization & Citizenship", img: "/images/practice/naturalization.jpg" },
-  { name: "Waivers", img: "/images/practice/waivers.jpg" },
+  { name: "Asylum", slug: "asylum", img: "/images/practice/asylum.webp" },
+  { name: "Deportation Defense", slug: "deportation-defense", img: "/images/practice/deportation-defense.webp" },
+  { name: "Family Immigration", slug: "family-marriage-immigration", img: "/images/practice/family-immigration.jpg" },
+  { name: "Green Cards", slug: "green-cards", img: "/images/practice/green-cards.jpg" },
+  { name: "Naturalization & Citizenship", slug: "naturalization-citizenship", img: "/images/practice/naturalization.jpg" },
+  { name: "Waivers", slug: "waivers", img: "/images/practice/waivers.jpg" },
 ];
 
 const differentiators = [
@@ -215,7 +216,7 @@ export default async function LocaleHomePage({
                   your goals.
                 </p>
                 <Link
-                  href={`/${locale}/practice-areas`}
+                  href={`/${locale}/practice-areas#${service.slug}`}
                   className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1a3a52]"
                 >
                   Learn more

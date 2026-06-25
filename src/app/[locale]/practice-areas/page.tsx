@@ -7,9 +7,11 @@ import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 
 // Aligned to the homepage cards, the reference site, and the supplied photos.
+// `slug` powers the anchor links from the homepage cards (/practice-areas#slug).
 const practiceAreas = [
   {
     title: "Asylum",
+    slug: "asylum",
     img: "/images/practice/asylum.webp",
     overview:
       "Protection-based applications for individuals fleeing persecution, with affirmative and defensive filing strategy.",
@@ -18,6 +20,7 @@ const practiceAreas = [
   },
   {
     title: "Deportation Defense",
+    slug: "deportation-defense",
     img: "/images/practice/deportation-defense.webp",
     overview:
       "Removal defense strategy, hearing preparation, and relief application support.",
@@ -26,6 +29,7 @@ const practiceAreas = [
   },
   {
     title: "Family Immigration",
+    slug: "family-marriage-immigration",
     img: "/images/practice/family-immigration.jpg",
     overview:
       "Petitions and adjustment planning for spouses, children, parents, and extended family pathways.",
@@ -34,6 +38,7 @@ const practiceAreas = [
   },
   {
     title: "Green Cards",
+    slug: "green-cards",
     img: "/images/practice/green-cards.jpg",
     overview:
       "Case evaluation, filing strategy, and interview preparation for permanent residency.",
@@ -42,6 +47,7 @@ const practiceAreas = [
   },
   {
     title: "Naturalization & Citizenship",
+    slug: "naturalization-citizenship",
     img: "/images/practice/naturalization.jpg",
     overview:
       "N-400 eligibility reviews, filing support, civics preparation, and interview coaching.",
@@ -50,6 +56,7 @@ const practiceAreas = [
   },
   {
     title: "Waivers",
+    slug: "waivers",
     img: "/images/practice/waivers.jpg",
     overview:
       "Inadmissibility and unlawful-presence waiver strategy to clear barriers to status.",
@@ -113,7 +120,8 @@ export default async function PracticeAreasPage({
         {practiceAreas.map((area) => (
           <section
             key={area.title}
-            className="overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100"
+            id={area.slug}
+            className="scroll-mt-28 overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100"
           >
             <div className="relative aspect-[16/9] w-full overflow-hidden">
               <Image
