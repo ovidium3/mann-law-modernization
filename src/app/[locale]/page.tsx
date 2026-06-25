@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { ReviewsSection } from "@/components/reviews/reviews-section";
 
 // Practice areas aligned to the reference site and the supplied photography.
 // `slug` deep-links each card to its section on the Practice Areas page.
@@ -38,11 +39,6 @@ const steps = [
   { title: "Strategy", body: "We review your case and map the strongest path forward." },
   { title: "Filing", body: "We prepare and submit your documentation with care." },
   { title: "Resolution", body: "We advocate for you through to a decision." },
-];
-
-const testimonials = [
-  "Professional, responsive, and deeply knowledgeable. We felt supported at every stage of our case.",
-  "The consultation process was organized and transparent, and we always knew our next step.",
 ];
 
 const faqs = [
@@ -254,46 +250,8 @@ export default async function LocaleHomePage({
         </ol>
       </section>
 
-      {/* 5. Testimonials */}
-      <section className="space-y-6">
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <div>
-            <p className={eyebrow}>Testimonials</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
-              What clients say
-            </h2>
-          </div>
-          <a
-            href={site.googleReviews.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-medium text-slate-600 transition hover:text-[#1a3a52]"
-          >
-            <span className="text-amber-500">{site.googleReviews.rating}★</span> average ·{" "}
-            {site.googleReviews.count} Google reviews
-            <span aria-hidden>→</span>
-          </a>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          {testimonials.map((quote) => (
-            <blockquote key={quote} className={`${card} text-sm text-slate-700`}>
-              <p className="text-amber-500" aria-hidden>
-                ★★★★★
-              </p>
-              <p className="mt-3">“{quote}”</p>
-            </blockquote>
-          ))}
-        </div>
-        <a
-          href={site.googleReviews.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-[#1a3a52]"
-        >
-          Read all {site.googleReviews.count} reviews on Google
-          <span aria-hidden>→</span>
-        </a>
-      </section>
+      {/* 5. Testimonials — live Google reviews (client component, cached) */}
+      <ReviewsSection />
 
       {/* 6. FAQ Preview — light-gray panel */}
       <section className="rounded-sm bg-slate-50 p-8 md:p-12">

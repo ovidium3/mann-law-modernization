@@ -11,6 +11,7 @@ declare global {
     CHAT_PROVIDER?: string; // "cloudflare" (default) | "openai"
     CHAT_MODEL?: string; // optional model override
     OPENAI_API_KEY?: string; // required when CHAT_PROVIDER=openai
+    GOOGLE_PLACES_API_KEY?: string; // live Google reviews (/api/reviews)
   }
 }
 

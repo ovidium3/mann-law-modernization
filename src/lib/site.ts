@@ -25,6 +25,7 @@ export const site = {
   // (or switch to the Google Places API later to auto-update).
   googleReviews: {
     url: "https://www.google.com/maps?cid=5903689903870040568",
+    placeId: "ChIJ3ThJb4i6JIgR-Nk7QLAe7lE",
     rating: "4.7",
     count: 304,
   },
