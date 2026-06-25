@@ -65,7 +65,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         <nav aria-label="Primary" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
           <HeaderNav navigation={navigation} />
           <Link
-            href={`/${locale}/contact`}
+            href={`/${locale}/contact#consultation`}
             className="rounded-sm bg-[#1a3a52] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#13283c]"
           >
             Schedule
