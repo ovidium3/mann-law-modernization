@@ -227,24 +227,26 @@ export default async function LocaleHomePage({
         </div>
       </section>
 
-      {/* 4. How It Works — light-gray panel with large muted numerals */}
-      <section className="rounded-sm bg-slate-50 p-8 md:p-12">
+      {/* 4. How It Works — navy feature band with large muted numerals */}
+      <section className="rounded-sm bg-[#1a3a52] p-8 text-white md:p-12">
         <div>
-          <p className={eyebrow}>How It Works</p>
-          <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">
+            How It Works
+          </p>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-white">
             A clear path, four steps
           </h2>
         </div>
         <ol className="mt-8 grid gap-6 md:grid-cols-4">
           {steps.map((step, index) => (
-            <li key={step.title}>
-              <span className="text-4xl font-bold text-slate-300">
+            <li key={step.title} className="md:border-l md:border-white/15 md:pl-5">
+              <span className="text-4xl font-bold text-white/30">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-3 text-lg font-semibold text-slate-900">
+              <h3 className="mt-3 text-lg font-semibold text-white">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-600">{step.body}</p>
+              <p className="mt-2 text-sm text-slate-300">{step.body}</p>
             </li>
           ))}
         </ol>

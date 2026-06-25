@@ -23,21 +23,21 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
 
   return (
     <header className="border-b border-slate-200 bg-white/95 backdrop-blur">
-      {/* Top utility bar */}
-      <div className="bg-[#1a3a52] text-white">
+      {/* Top utility tier (same surface as the header — one cohesive bar) */}
+      <div className="border-b border-slate-100">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2 text-xs sm:px-6 lg:px-8">
           <div className="flex items-center gap-4">
-            <a href={telHref} className="flex items-center gap-1.5 font-medium hover:text-blue-200">
+            <a href={telHref} className="flex items-center gap-1.5 font-medium text-[#1a3a52] hover:underline">
               <PhoneIcon className="h-3.5 w-3.5" />
               <span>{site.phone}</span>
             </a>
-            <span className="hidden text-white/70 sm:inline">
+            <span className="hidden text-slate-500 sm:inline">
               Farmington Hills, MI · Mon–Fri 9–5
             </span>
           </div>
           <SocialLinks
             className="flex items-center gap-3"
-            linkClassName="text-white/80 transition hover:text-white"
+            linkClassName="text-slate-400 transition hover:text-[#1a3a52]"
             iconClassName="h-4 w-4"
           />
         </div>
