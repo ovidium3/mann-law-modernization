@@ -94,16 +94,16 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs text-slate-400 sm:px-6 lg:px-8">
+        {/* Left-aligned + extra bottom padding so the fixed chat widget
+            (bottom-right) doesn't cover these links. */}
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-4 pt-4 pb-20 text-xs text-slate-400 sm:px-6 lg:px-8">
           <p>© {year} {site.name}. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href={`/${locale}/privacy`} className="font-medium text-slate-300 transition hover:text-white">
-              Privacy Policy
-            </Link>
-            <Link href={`/${locale}/terms`} className="font-medium text-slate-300 transition hover:text-white">
-              Disclaimer
-            </Link>
-          </div>
+          <Link href={`/${locale}/privacy`} className="font-medium text-slate-300 transition hover:text-white">
+            Privacy Policy
+          </Link>
+          <Link href={`/${locale}/terms`} className="font-medium text-slate-300 transition hover:text-white">
+            Disclaimer
+          </Link>
         </div>
       </div>
     </footer>
