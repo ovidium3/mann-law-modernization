@@ -22,6 +22,8 @@ CHAT_PROVIDER="cloudflare"
 OPENAI_API_KEY=""
 # Resend API key for lead-notification email to the firm.
 RESEND_API_KEY=""
+# Google Places API key for live Google reviews (/api/reviews).
+GOOGLE_PLACES_API_KEY=""
 
 # --- Phase 2: admin panel (Google Auth) ---
 # OAuth client credentials for Google sign-in, restricted to an email allowlist.

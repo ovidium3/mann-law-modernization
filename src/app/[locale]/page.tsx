@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 
 import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
+import { ReviewsSection } from "@/components/reviews/reviews-section";
 
 // Practice areas aligned to the reference site and the supplied photography.
 // `slug` deep-links each card to its section on the Practice Areas page.
@@ -37,11 +39,6 @@ const steps = [
   { title: "Strategy", body: "We review your case and map the strongest path forward." },
   { title: "Filing", body: "We prepare and submit your documentation with care." },
   { title: "Resolution", body: "We advocate for you through to a decision." },
-];
-
-const testimonials = [
-  "Professional, responsive, and deeply knowledgeable. We felt supported at every stage of our case.",
-  "The consultation process was organized and transparent, and we always knew our next step.",
 ];
 
 const faqs = [
@@ -147,8 +144,8 @@ export default async function LocaleHomePage({
               <dd className="text-xs text-slate-300">Languages supported</dd>
             </div>
             <div>
-              <dt className="text-2xl font-bold text-amber-400">4.7★</dt>
-              <dd className="text-xs text-slate-300">From 303 reviews</dd>
+              <dt className="text-2xl font-bold text-amber-400">{site.googleReviews.rating}★</dt>
+              <dd className="text-xs text-slate-300">From {site.googleReviews.count} reviews</dd>
             </div>
           </dl>
         </div>
@@ -253,30 +250,8 @@ export default async function LocaleHomePage({
         </ol>
       </section>
 
-      {/* 5. Testimonials */}
-      <section className="space-y-6">
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <div>
-            <p className={eyebrow}>Testimonials</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">
-              What clients say
-            </h2>
-          </div>
-          <p className="text-sm font-medium text-slate-600">
-            <span className="text-amber-500">4.7★</span> average · 303 Google reviews
-          </p>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          {testimonials.map((quote) => (
-            <blockquote key={quote} className={`${card} text-sm text-slate-700`}>
-              <p className="text-amber-500" aria-hidden>
-                ★★★★★
-              </p>
-              <p className="mt-3">“{quote}”</p>
-            </blockquote>
-          ))}
-        </div>
-      </section>
+      {/* 5. Testimonials — live Google reviews (client component, cached) */}
+      <ReviewsSection />
 
       {/* 6. FAQ Preview — light-gray panel */}
       <section className="rounded-sm bg-slate-50 p-8 md:p-12">
