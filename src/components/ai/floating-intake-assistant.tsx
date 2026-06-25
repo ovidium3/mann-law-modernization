@@ -4,15 +4,6 @@ import { useMemo, useState } from "react";
 
 import type { AssistantMessage, LeadFormData } from "@/types/assistant";
 
-const serviceHints = [
-  "Family-based immigration",
-  "Employment-based immigration",
-  "Green cards",
-  "Citizenship and naturalization",
-  "Visa services",
-  "Deportation defense",
-];
-
 const initialMessages: AssistantMessage[] = [
   {
     role: "assistant",
@@ -35,23 +26,11 @@ function isValidPhone(phone: string) {
   return /^\+?[0-9()\-.\s]{7,20}$/.test(phone.trim());
 }
 
-function generateAssistantReply(input: string) {
-  const normalized = input.toLowerCase();
-  const matchedService = serviceHints.find((hint) =>
-    normalized.includes(hint.split(" ")[0].toLowerCase()),
-  );
-
-  if (matchedService) {
-    return `Thanks for sharing. Based on your message, ${matchedService} may be relevant. I can help capture your information for a consultation follow-up.`;
-  }
-
-  return "Thanks — I can provide general information and connect you with the best practice area. Please share a short case summary and your preferred contact details.";
-}
-
 export function FloatingIntakeAssistant() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<AssistantMessage[]>(initialMessages);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const [lead, setLead] = useState<LeadFormData>(emptyLead);
   const [submitted, setSubmitted] = useState(false);
 
@@ -64,19 +43,47 @@ export function FloatingIntakeAssistant() {
     );
   }, [lead]);
 
-  const sendMessage = () => {
-    if (!input.trim()) {
+  const sendMessage = async () => {
+    const trimmed = input.trim();
+    if (!trimmed || loading) {
       return;
     }
 
-    const userMessage: AssistantMessage = { role: "user", text: input.trim() };
-    const assistantMessage: AssistantMessage = {
-      role: "assistant",
-      text: generateAssistantReply(input),
-    };
-
-    setMessages((current) => [...current, userMessage, assistantMessage]);
+    const history: AssistantMessage[] = [...messages, { role: "user", text: trimmed }];
+    setMessages(history);
     setInput("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/intake/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: history.map((message) => ({
+            role: message.role,
+            content: message.text,
+          })),
+        }),
+      });
+
+      const data = (await response.json()) as { reply?: string; error?: string };
+      const text =
+        response.ok && data.reply
+          ? data.reply
+          : data.error ?? "Something went wrong. Please try again.";
+
+      setMessages((current) => [...current, { role: "assistant", text }]);
+    } catch {
+      setMessages((current) => [
+        ...current,
+        {
+          role: "assistant",
+          text: "I couldn't reach the assistant. Please check your connection and try again.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const submitLead = () => {
@@ -124,6 +131,11 @@ export function FloatingIntakeAssistant() {
                 {message.text}
               </p>
             ))}
+            {loading ? (
+              <p className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-slate-500" aria-live="polite">
+                Thinking…
+              </p>
+            ) : null}
           </div>
           <div className="space-y-2 border-t border-slate-200 px-4 py-3">
             <label htmlFor="assistant-input" className="text-xs font-medium text-slate-600">
@@ -139,9 +151,10 @@ export function FloatingIntakeAssistant() {
             <button
               type="button"
               onClick={sendMessage}
-              className="w-full rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+              disabled={loading || !input.trim()}
+              className="w-full rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-              Send
+              {loading ? "Sending…" : "Send"}
             </button>
           </div>
           <div className="space-y-2 border-t border-slate-200 bg-slate-50 px-4 py-3">

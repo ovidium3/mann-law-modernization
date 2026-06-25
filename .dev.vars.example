@@ -11,7 +11,14 @@
 # they are listed here only as a reminder of what the app reads.
 
 # --- Phase 1: AI assistant + lead capture ---
-# OpenAI API key for the /api/intake/chat assistant (gpt-4o-mini).
+# Chat provider for the /api/intake/chat assistant: "cloudflare" (default,
+# Workers AI binding, no key required) or "openai".
+CHAT_PROVIDER="cloudflare"
+# Optional model override.
+#   Cloudflare default: @cf/meta/llama-3.1-8b-instruct
+#   OpenAI default:     gpt-4o-mini
+# CHAT_MODEL=""
+# OpenAI API key — required ONLY when CHAT_PROVIDER=openai.
 OPENAI_API_KEY=""
 # Resend API key for lead-notification email to the firm.
 RESEND_API_KEY=""

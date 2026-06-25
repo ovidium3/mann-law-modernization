@@ -43,5 +43,9 @@ export default nextConfig;
 
 // Enables calling `getCloudflareContext()` (bindings, env) during `next dev`,
 // so local dev matches the Workers runtime. Added for the OpenNext adapter.
+// Dev-only: at `next build` time we don't need bindings, and the remote-only
+// Workers AI binding would otherwise force a Cloudflare login during the build.
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
-initOpenNextCloudflareForDev();
+if (process.env.NODE_ENV === "development") {
+  void initOpenNextCloudflareForDev();
+}
