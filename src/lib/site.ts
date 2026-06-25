@@ -20,6 +20,14 @@ export const site = {
     linkedin: "https://www.linkedin.com/company/george-p.-mann-&-associates-pc/",
     youtube: "https://www.youtube.com/channel/UComc16KSrNsPk2Z5d3Kh70Q",
   },
+  // Google Business Profile (George P. Mann & Associates). `url` opens the
+  // listing + reviews. rating/count are shown statically — update by hand
+  // (or switch to the Google Places API later to auto-update).
+  googleReviews: {
+    url: "https://www.google.com/maps?cid=5903689903870040568",
+    rating: "4.7",
+    count: 304,
+  },
 } as const;
 
 export type NavItem = {
