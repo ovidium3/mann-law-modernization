@@ -20,8 +20,18 @@ CHAT_PROVIDER="cloudflare"
 # CHAT_MODEL=""
 # OpenAI API key — required ONLY when CHAT_PROVIDER=openai.
 OPENAI_API_KEY=""
-# Resend API key for lead-notification email to the firm.
+# Resend API key for contact-form lead emails (/api/contact). Get one free at
+# https://resend.com (API Keys → Create). In Resend test mode the default
+# "from" (onboarding@resend.dev) only delivers to your own Resend account email.
 RESEND_API_KEY=""
+# Where form submissions are emailed. In dev, set this to your own inbox; in
+# prod, the firm's inbox. Without it (or RESEND_API_KEY) the form returns a
+# "temporarily unavailable" error instead of sending.
+LEAD_INBOX=""
+# Optional "from" header. Leave blank to use Resend's onboarding@resend.dev.
+# For production, set this to an address on a domain verified in Resend, e.g.
+# "Mann Law Group <website@mannlawgrp.com>".
+LEAD_FROM=""
 # Google Places API key for live Google reviews (/api/reviews).
 GOOGLE_PLACES_API_KEY=""
 

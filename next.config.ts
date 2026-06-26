@@ -5,9 +5,12 @@ import type { NextConfig } from "next";
 // inline styles (a nonce-based CSP would need middleware and is a later step).
 // `frame-src` allows the Google Maps embed on the contact page; `frame-ancestors
 // 'none'` blocks clickjacking. Tighten once real script sources are known.
+// `'unsafe-eval'` is added in dev only — React's dev build uses eval() for
+// debugging features; it is NOT included in production.
+const isDev = process.env.NODE_ENV === "development";
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://www.google-analytics.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
   "font-src 'self' data:",
