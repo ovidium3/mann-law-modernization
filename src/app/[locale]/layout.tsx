@@ -48,7 +48,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <SiteHeader locale={activeLocale} />
       <main>{children}</main>
       <SiteFooter locale={activeLocale} />
-      <FloatingIntakeAssistant />
+      <FloatingIntakeAssistant locale={activeLocale} />
     </div>
   );
 }
