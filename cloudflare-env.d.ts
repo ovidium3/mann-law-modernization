@@ -12,6 +12,9 @@ declare global {
     CHAT_MODEL?: string; // optional model override
     OPENAI_API_KEY?: string; // required when CHAT_PROVIDER=openai
     GOOGLE_PLACES_API_KEY?: string; // live Google reviews (/api/reviews)
+    RESEND_API_KEY?: string; // lead-notification email (/api/contact)
+    LEAD_INBOX?: string; // destination address for form submissions
+    LEAD_FROM?: string; // optional "from" header; defaults to onboarding@resend.dev
   }
 }
 
