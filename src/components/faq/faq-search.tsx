@@ -33,7 +33,7 @@ export function FaqSearch({ items }: FaqSearchProps) {
 
   return (
     <section className="space-y-4">
-      <label htmlFor="faq-search" className="block text-sm font-medium text-slate-700">
+      <label htmlFor="faq-search" className="block text-xs font-semibold uppercase tracking-wide text-slate-600">
         Search questions
       </label>
       <input
@@ -41,7 +41,7 @@ export function FaqSearch({ items }: FaqSearchProps) {
         type="search"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        className="w-full rounded-sm border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1a3a52] focus:outline-none focus:ring-1 focus:ring-[#1a3a52]"
+        className="w-full rounded-sm border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 transition placeholder:text-slate-400 hover:border-slate-400 focus:border-[#1a3a52] focus:outline-none focus:ring-2 focus:ring-[#1a3a52]/25"
         placeholder="Type visa, green card, interview, timeline..."
       />
       <div className="space-y-3">
