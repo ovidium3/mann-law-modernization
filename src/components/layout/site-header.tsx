@@ -66,7 +66,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           <HeaderNav navigation={navigation} />
           <Link
             href={`/${locale}/contact#consultation`}
-            className="rounded-sm bg-[#1a3a52] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#13283c]"
+            className="border-b-2 border-transparent pb-0.5 font-medium text-slate-700 transition hover:text-[#1a3a52]"
           >
             Schedule
           </Link>
