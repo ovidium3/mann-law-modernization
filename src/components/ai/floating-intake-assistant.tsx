@@ -1,36 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
-import type { AssistantMessage, LeadFormData } from "@/types/assistant";
+import type { Locale } from "@/lib/i18n";
+import type { AssistantMessage } from "@/types/assistant";
+
+type FloatingIntakeAssistantProps = {
+  locale: Locale;
+};
 
 const initialMessages: AssistantMessage[] = [
   {
     role: "assistant",
-    text: "Hello — I can answer general immigration questions and help route your consultation request.",
+    text: "Hello — I can answer general immigration questions. When you're ready to speak with an attorney, you can request a consultation below.",
   },
 ];
 
-const emptyLead: LeadFormData = {
-  name: "",
-  email: "",
-  phone: "",
-  caseSummary: "",
-};
-
 const fieldClass =
-  "w-full rounded-sm border border-slate-300 p-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1a3a52] focus:outline-none focus:ring-1 focus:ring-[#1a3a52]";
-const labelClass = "text-xs font-medium text-slate-600";
+  "w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-[#1a3a52] focus:outline-none focus:ring-2 focus:ring-[#1a3a52]/25";
 const navyButton =
-  "w-full rounded-sm bg-[#1a3a52] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#13283c] disabled:cursor-not-allowed disabled:bg-slate-300";
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
-
-function isValidPhone(phone: string) {
-  return /^\+?[0-9()\-.\s]{7,20}$/.test(phone.trim());
-}
+  "shrink-0 rounded-sm bg-[#1a3a52] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#13283c] disabled:cursor-not-allowed disabled:bg-slate-300";
 
 function ChatIcon() {
   return (
@@ -40,22 +30,19 @@ function ChatIcon() {
   );
 }
 
-export function FloatingIntakeAssistant() {
+export function FloatingIntakeAssistant({ locale }: FloatingIntakeAssistantProps) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<AssistantMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [lead, setLead] = useState<LeadFormData>(emptyLead);
-  const [submitted, setSubmitted] = useState(false);
+  const endRef = useRef<HTMLDivElement>(null);
 
-  const canSubmitLead = useMemo(() => {
-    return (
-      lead.name.trim().length > 1 &&
-      isValidEmail(lead.email) &&
-      isValidPhone(lead.phone) &&
-      lead.caseSummary.trim().length > 10
-    );
-  }, [lead]);
+  // Keep the newest message in view as the conversation grows or while typing.
+  useEffect(() => {
+    if (open) {
+      endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [messages, loading, open]);
 
   const sendMessage = async () => {
     const trimmed = input.trim();
@@ -100,15 +87,6 @@ export function FloatingIntakeAssistant() {
     }
   };
 
-  const submitLead = () => {
-    if (!canSubmitLead) {
-      return;
-    }
-
-    // Placeholder for future API integration (Worker → email/CRM).
-    setSubmitted(true);
-  };
-
   return (
     <div className="fixed right-4 bottom-4 z-50">
       {!open ? (
@@ -122,7 +100,7 @@ export function FloatingIntakeAssistant() {
         </button>
       ) : (
         <div className="flex max-h-[min(80vh,560px)] w-[min(370px,calc(100vw-2rem))] flex-col overflow-hidden rounded-sm border border-slate-200 bg-white shadow-2xl">
-          <div className="flex items-center justify-between bg-[#1a3a52] px-4 py-3 text-white">
+          <div className="flex shrink-0 items-center justify-between bg-[#1a3a52] px-4 py-3 text-white">
             <h2 className="font-serif text-sm font-bold">AI Intake Assistant</h2>
             <button
               type="button"
@@ -134,7 +112,7 @@ export function FloatingIntakeAssistant() {
             </button>
           </div>
 
-          <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-3">
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-4 py-3">
             {messages.map((message, index) => (
               <div
                 key={`${message.role}-${index}`}
@@ -155,103 +133,49 @@ export function FloatingIntakeAssistant() {
                 Thinking…
               </div>
             ) : null}
+            <div ref={endRef} />
           </div>
 
-          <div className="space-y-2 border-t border-slate-200 px-4 py-3">
-            <label htmlFor="assistant-input" className={labelClass}>
-              Ask a general question
-            </label>
-            <textarea
-              id="assistant-input"
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              className={`h-16 ${fieldClass}`}
-              placeholder="Example: I need help with a work visa."
-            />
-            <button
-              type="button"
-              onClick={sendMessage}
-              disabled={loading || !input.trim()}
-              className={navyButton}
-            >
-              {loading ? "Sending…" : "Send"}
-            </button>
-          </div>
+          <div className="shrink-0 space-y-3 border-t border-slate-200 px-4 py-3">
+            <div className="flex items-end gap-2">
+              <label htmlFor="assistant-input" className="sr-only">
+                Ask a general immigration question
+              </label>
+              <textarea
+                id="assistant-input"
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    void sendMessage();
+                  }
+                }}
+                rows={1}
+                className={`max-h-28 min-h-[2.5rem] resize-none ${fieldClass}`}
+                placeholder="Ask a question…"
+              />
+              <button
+                type="button"
+                onClick={sendMessage}
+                disabled={loading || !input.trim()}
+                className={navyButton}
+              >
+                {loading ? "…" : "Send"}
+              </button>
+            </div>
 
-          <div className="space-y-2 border-t border-slate-200 bg-slate-50 px-4 py-3">
-            <p className="text-xs text-slate-500">
-              For informational purposes only — this does not constitute legal advice.
-            </p>
-            {submitted ? (
-              <p className="rounded-sm bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
-                Thank you. Your request has been captured for follow-up.
-              </p>
-            ) : (
-              <>
-                <label htmlFor="assistant-lead-name" className={labelClass}>
-                  Name
-                </label>
-                <input
-                  id="assistant-lead-name"
-                  type="text"
-                  placeholder="Name"
-                  value={lead.name}
-                  onChange={(event) =>
-                    setLead((current) => ({ ...current, name: event.target.value }))
-                  }
-                  className={fieldClass}
-                />
-                <label htmlFor="assistant-lead-email" className={labelClass}>
-                  Email
-                </label>
-                <input
-                  id="assistant-lead-email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={lead.email}
-                  onChange={(event) =>
-                    setLead((current) => ({ ...current, email: event.target.value }))
-                  }
-                  className={fieldClass}
-                />
-                <label htmlFor="assistant-lead-phone" className={labelClass}>
-                  Phone
-                </label>
-                <input
-                  id="assistant-lead-phone"
-                  type="tel"
-                  placeholder="(248) 932-0990"
-                  value={lead.phone}
-                  onChange={(event) =>
-                    setLead((current) => ({ ...current, phone: event.target.value }))
-                  }
-                  className={fieldClass}
-                />
-                <label htmlFor="assistant-lead-summary" className={labelClass}>
-                  Brief case summary
-                </label>
-                <textarea
-                  id="assistant-lead-summary"
-                  placeholder="Brief case summary"
-                  value={lead.caseSummary}
-                  onChange={(event) =>
-                    setLead((current) => ({
-                      ...current,
-                      caseSummary: event.target.value,
-                    }))
-                  }
-                  className={`h-16 ${fieldClass}`}
-                />
-                <button
-                  type="button"
-                  onClick={submitLead}
-                  disabled={!canSubmitLead}
-                  className={navyButton}
-                >
-                  Submit Consultation Request
-                </button>
-              </>
-            )}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+              <span>Informational only — not legal advice.</span>
+              <Link
+                href={`/${locale}/contact#consultation`}
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center gap-1 font-semibold text-[#1a3a52] hover:underline"
+              >
+                Request a consultation
+                <span aria-hidden>→</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}
