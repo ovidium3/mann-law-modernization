@@ -7,17 +7,21 @@ import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { ReviewsSection } from "@/components/reviews/reviews-section";
+import { getPracticeArea, type PracticeArea } from "@/content/practice-areas";
 
-// Practice areas aligned to the reference site and the supplied photography.
-// `slug` deep-links each card to its section on the Practice Areas page.
-const services = [
-  { name: "Asylum", slug: "asylum", img: "/images/practice/asylum.webp" },
-  { name: "Deportation Defense", slug: "deportation-defense", img: "/images/practice/deportation-defense.webp" },
-  { name: "Family Immigration", slug: "family-marriage-immigration", img: "/images/practice/family-immigration.jpg" },
-  { name: "Green Cards", slug: "green-cards", img: "/images/practice/green-cards.jpg" },
-  { name: "Naturalization & Citizenship", slug: "naturalization-citizenship", img: "/images/practice/naturalization.jpg" },
-  { name: "Waivers", slug: "waivers", img: "/images/practice/waivers.jpg" },
-];
+// Featured practice areas for the homepage — a curated subset of the full set
+// on /practice-areas. Content is single-sourced from the practice-areas module
+// so titles, images, and links never drift; each card deep-links to its page.
+const featuredAreas = [
+  "asylum",
+  "deportation-defense",
+  "family-marriage-immigration",
+  "green-cards",
+  "naturalization-citizenship",
+  "waivers",
+]
+  .map((slug) => getPracticeArea(slug))
+  .filter((area): area is PracticeArea => Boolean(area));
 
 const differentiators = [
   {
@@ -191,36 +195,39 @@ export default async function LocaleHomePage({
           <h2 className="mt-3 font-serif text-3xl font-bold text-slate-900">Practice areas</h2>
         </div>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <article
-              key={service.name}
-              className="group overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
+          {featuredAreas.map((area) => (
+            <Link
+              key={area.slug}
+              href={`/${locale}/practice-areas/${area.slug}`}
+              className="group flex flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden">
-                <Image
-                  src={service.img}
-                  alt={service.name}
-                  fill
-                  unoptimized
-                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
-                />
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#1a3a52]">
+                {area.img ? (
+                  <Image
+                    src={area.img}
+                    alt={area.title}
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition group-hover:scale-[1.02]"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center p-6 text-center">
+                    <span className="font-serif text-xl font-bold text-white/90">
+                      {area.title}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-slate-900">{service.name}</h3>
-                <p className="mt-2 text-sm text-slate-600">
-                  Structured case planning and documentation support tailored to
-                  your goals.
-                </p>
-                <Link
-                  href={`/${locale}/practice-areas#${service.slug}`}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1a3a52]"
-                >
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="text-lg font-semibold text-slate-900">{area.title}</h3>
+                <p className="mt-2 flex-1 text-sm text-slate-600">{area.tagline}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1a3a52]">
                   Learn more
                   <Arrow />
-                </Link>
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
