@@ -2,8 +2,18 @@ import type { MetadataRoute } from "next";
 
 import { locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { practiceAreaSlugs } from "@/content/practice-areas";
 
-const paths = ["", "/practice-areas", "/attorney", "/faq", "/contact", "/privacy", "/terms"];
+const paths = [
+  "",
+  "/practice-areas",
+  ...practiceAreaSlugs.map((slug) => `/practice-areas/${slug}`),
+  "/attorney",
+  "/faq",
+  "/contact",
+  "/privacy",
+  "/terms",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const updatedAt = new Date();
