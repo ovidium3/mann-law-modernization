@@ -59,6 +59,7 @@ export function getNavigation(locale: Locale): NavItem[] {
     { label: "Attorney", href: `/${locale}/attorney` },
     { label: "About", href: `/${locale}/about` },
     { label: "Clients", href: `/${locale}/clients` },
+    { label: "Blog", href: `/${locale}/blog` },
     { label: "FAQ", href: `/${locale}/faq` },
     { label: "Contact", href: `/${locale}/contact` },
   ];
