@@ -6,40 +6,9 @@ import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
-
-// Names + titles sourced from mannlawgrp.com/our-people (ordered by seniority).
-// Individual bios are not yet published here — add when the firm provides them.
-const attorneys = [
-  { name: "George P. Mann", role: "Founder & Managing Partner", img: "/images/attorneys/George-P.-Mann.png" },
-  { name: "Oana C. Marina", role: "Partner", img: "/images/attorneys/Oana-C.-Marina.png" },
-  { name: "Aleksandra Dragovic", role: "Partner", img: "/images/attorneys/Aleksandra-Dragovic.png" },
-  { name: "Moses A. El-Sayed", role: "Partner", img: "/images/attorneys/Moses-A.-El-Sayed.png" },
-  { name: "Nadine Kassem", role: "Partner", img: "/images/attorneys/Nadine-Kassem.png" },
-  { name: "Rachel Lehr", role: "Senior Associate", img: "/images/attorneys/Rachel-Lehr.png" },
-  { name: "Rebecca Rook", role: "Senior Associate", img: "/images/attorneys/Rebecca-Rook.png" },
-];
-
-const attorneyProfile = {
-  name: "Mann Law Group Attorneys",
-  credentials: [
-    "J.D., Accredited U.S. Law School",
-    "Member, State Bar of Michigan",
-    "Immigration law and federal filings focus",
-  ],
-  experience:
-    "45+ years of combined experience supporting family petitions, business immigration pathways, and removal defense.",
-  languages: ["English", "Spanish", "Ukrainian", "Romanian"],
-  focus: [
-    "Family-based petitions",
-    "Employment immigration",
-    "Citizenship and naturalization",
-    "Complex case strategy and intake",
-  ],
-  bio: "Our attorneys combine legal strategy with compassionate client service, focusing on clear communication, realistic expectations, and proactive risk management throughout every stage of the immigration process.",
-};
+import { attorneys } from "@/content/attorneys";
 
 const eyebrow = "text-xs font-semibold uppercase tracking-[0.2em] text-[#1a3a52]";
-const card = "rounded-sm bg-white p-6 shadow-sm ring-1 ring-slate-100";
 const btnPrimary =
   "inline-flex items-center justify-center gap-2 rounded-sm bg-[#1a3a52] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#13283c]";
 
@@ -60,15 +29,15 @@ export async function generateMetadata({
   const activeLocale: Locale = isLocale(locale) ? locale : "en";
 
   return makeMetadata({
-    title: "Attorney",
+    title: "Our Attorneys",
     description:
-      "Meet the Mann Law Group attorney team, credentials, experience, languages, and immigration practice focus.",
+      "Meet the immigration attorneys of Mann Law Group — credentials, experience, languages, and practice focus across the firm.",
     locale: activeLocale,
     path: "/attorney",
   });
 }
 
-export default async function AttorneyPage({
+export default async function AttorneyDirectoryPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -79,14 +48,20 @@ export default async function AttorneyPage({
     notFound();
   }
 
-  const attorneySchema = {
+  // schema.org list of the firm's attorneys for the directory page.
+  const directorySchema = {
     "@context": "https://schema.org",
-    "@type": "Attorney",
-    name: attorneyProfile.name,
-    knowsLanguage: attorneyProfile.languages,
-    worksFor: site.name,
-    areaServed: "United States",
-    description: attorneyProfile.bio,
+    "@type": "ItemList",
+    itemListElement: attorneys.map((attorney, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Attorney",
+        name: attorney.name,
+        jobTitle: attorney.role,
+        url: `${site.domain}/${locale}/attorney/${attorney.slug}`,
+      },
+    })),
   };
 
   return (
@@ -94,19 +69,24 @@ export default async function AttorneyPage({
       <header className="max-w-3xl space-y-4">
         <p className={eyebrow}>Our Team</p>
         <h1 className="font-serif text-4xl font-bold text-slate-900">Our Attorneys</h1>
-        <p className="text-base text-slate-600">{attorneyProfile.bio}</p>
+        <p className="text-base text-slate-600">
+          Our attorneys combine legal strategy with compassionate, multilingual
+          client service. Many came to immigration law through their own families&rsquo;
+          immigrant journeys. Explore each profile for credentials, experience, and
+          practice focus.
+        </p>
         <Link href={`/${locale}/contact`} className={btnPrimary}>
           Request a Consultation
           <Arrow />
         </Link>
       </header>
 
-      {/* Team grid */}
       <section className="grid grid-cols-2 gap-6 lg:grid-cols-4">
         {attorneys.map((attorney) => (
-          <article
-            key={attorney.name}
-            className="overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100"
+          <Link
+            key={attorney.slug}
+            href={`/${locale}/attorney/${attorney.slug}`}
+            className="group flex flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
           >
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100">
               <Image
@@ -115,52 +95,28 @@ export default async function AttorneyPage({
                 fill
                 unoptimized
                 sizes="(min-width: 1024px) 25vw, 50vw"
-                className="object-cover object-top"
+                className="object-cover object-top transition group-hover:scale-[1.02]"
               />
             </div>
-            <div className="p-4">
+            <div className="flex flex-1 flex-col p-4">
               <h2 className="font-serif text-base font-bold text-slate-900">
                 {attorney.name}
               </h2>
               <p className="mt-1 text-xs font-medium uppercase tracking-wide text-[#1a3a52]">
                 {attorney.role}
               </p>
+              <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1a3a52]">
+                View profile
+                <Arrow />
+              </span>
             </div>
-          </article>
+          </Link>
         ))}
-      </section>
-
-      {/* Firm overview */}
-      <section className="grid gap-5 md:grid-cols-2">
-        <article className={card}>
-          <h2 className="font-serif text-lg font-bold text-slate-900">Credentials</h2>
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
-            {attorneyProfile.credentials.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className={card}>
-          <h2 className="font-serif text-lg font-bold text-slate-900">Practice Focus</h2>
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
-            {attorneyProfile.focus.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className={card}>
-          <h2 className="font-serif text-lg font-bold text-slate-900">Experience</h2>
-          <p className="mt-3 text-sm text-slate-700">{attorneyProfile.experience}</p>
-        </article>
-        <article className={card}>
-          <h2 className="font-serif text-lg font-bold text-slate-900">Languages Spoken</h2>
-          <p className="mt-3 text-sm text-slate-700">{attorneyProfile.languages.join(", ")}</p>
-        </article>
       </section>
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(attorneySchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(directorySchema) }}
       />
     </div>
   );

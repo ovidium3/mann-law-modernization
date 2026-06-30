@@ -3,12 +3,14 @@ import type { MetadataRoute } from "next";
 import { locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { practiceAreaSlugs } from "@/content/practice-areas";
+import { attorneySlugs } from "@/content/attorneys";
 
 const paths = [
   "",
   "/practice-areas",
   ...practiceAreaSlugs.map((slug) => `/practice-areas/${slug}`),
   "/attorney",
+  ...attorneySlugs.map((slug) => `/attorney/${slug}`),
   "/faq",
   "/contact",
   "/privacy",
