@@ -98,6 +98,9 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             (bottom-right) doesn't cover these links. */}
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-4 pt-4 pb-20 text-xs text-slate-400 sm:px-6 lg:px-8">
           <p>© {year} {site.name}. All rights reserved.</p>
+          <Link href={`/${locale}/careers`} className="font-medium text-slate-300 transition hover:text-white">
+            Careers
+          </Link>
           <Link href={`/${locale}/privacy`} className="font-medium text-slate-300 transition hover:text-white">
             Privacy Policy
           </Link>
