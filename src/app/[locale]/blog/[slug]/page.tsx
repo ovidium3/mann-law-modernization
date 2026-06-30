@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Components } from "react-markdown";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import Markdown from "markdown-to-jsx";
 
 import { blogSlugs, getBlogPost } from "@/content/blog";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -21,31 +19,17 @@ function formatDate(iso: string): string {
   });
 }
 
-// Tailwind-styled renderers for the Markdown body, so posts match the site
-// without pulling in the typography plugin.
-const markdownComponents: Components = {
-  h2: ({ children }) => (
-    <h2 className="mt-10 font-serif text-2xl font-bold text-slate-900">{children}</h2>
-  ),
-  h3: ({ children }) => (
-    <h3 className="mt-6 font-serif text-xl font-bold text-slate-900">{children}</h3>
-  ),
-  p: ({ children }) => (
-    <p className="mt-4 text-base leading-relaxed text-slate-700">{children}</p>
-  ),
-  ul: ({ children }) => (
-    <ul className="mt-4 list-disc space-y-2 pl-6 text-base text-slate-700">{children}</ul>
-  ),
-  ol: ({ children }) => (
-    <ol className="mt-4 list-decimal space-y-2 pl-6 text-base text-slate-700">{children}</ol>
-  ),
-  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-  strong: ({ children }) => <strong className="font-semibold text-slate-900">{children}</strong>,
-  a: ({ href, children }) => (
-    <a href={href} className="font-medium text-[#1a3a52] underline underline-offset-2 hover:text-[#13283c]">
-      {children}
-    </a>
-  ),
+// Tailwind classes for the Markdown body, so posts match the site without the
+// typography plugin. markdown-to-jsx merges these onto the default elements.
+const markdownOverrides = {
+  h2: { props: { className: "mt-10 font-serif text-2xl font-bold text-slate-900" } },
+  h3: { props: { className: "mt-6 font-serif text-xl font-bold text-slate-900" } },
+  p: { props: { className: "mt-4 text-base leading-relaxed text-slate-700" } },
+  ul: { props: { className: "mt-4 list-disc space-y-2 pl-6 text-base text-slate-700" } },
+  ol: { props: { className: "mt-4 list-decimal space-y-2 pl-6 text-base text-slate-700" } },
+  li: { props: { className: "leading-relaxed" } },
+  strong: { props: { className: "font-semibold text-slate-900" } },
+  a: { props: { className: "font-medium text-[#1a3a52] underline underline-offset-2 hover:text-[#13283c]" } },
 };
 
 export function generateStaticParams() {
@@ -135,9 +119,9 @@ export default async function BlogPostPage({
       </header>
 
       <div className="mt-8">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+        <Markdown options={{ forceBlock: true, overrides: markdownOverrides }}>
           {post.body}
-        </ReactMarkdown>
+        </Markdown>
       </div>
 
       <p className="mt-12 rounded-sm border border-slate-200 bg-slate-50 p-4 text-xs leading-relaxed text-slate-500">
