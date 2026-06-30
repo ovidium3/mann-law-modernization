@@ -4,6 +4,7 @@ import { locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { practiceAreaSlugs } from "@/content/practice-areas";
 import { attorneySlugs } from "@/content/attorneys";
+import { blogSlugs } from "@/content/blog";
 
 const paths = [
   "",
@@ -15,6 +16,8 @@ const paths = [
   "/about/beliefs",
   "/careers",
   "/clients",
+  "/blog",
+  ...blogSlugs.map((slug) => `/blog/${slug}`),
   "/faq",
   "/contact",
   "/privacy",
