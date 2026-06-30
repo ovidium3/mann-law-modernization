@@ -29,7 +29,7 @@ export async function generateMetadata({
   return makeMetadata({
     title: "Client Resources",
     description:
-      "Resources for Mann Law Group clients — official USCIS and immigration-court status tools, what to do when a government notice arrives, and how to reach our office.",
+      "Resources for Mann Law Group clients — case portal access, invoice payment, official USCIS and immigration-court status tools, and what to do when a government notice arrives.",
     locale: activeLocale,
     path: "/clients",
   });
@@ -65,10 +65,47 @@ export default async function ClientsPage({
           Client Resources
         </h1>
         <p className="text-base text-slate-600">
-          Check official government status tools, find out what to do if a notice
-          arrives in the mail, and see how to reach our office — all in one place.
+          Access your case, pay an invoice, check official government status
+          tools, and find out what to do if a notice arrives in the mail — all in
+          one place.
         </p>
       </header>
+
+      {/* Portal + invoice. These route through the firm's third-party systems
+          (Docketwise / QuickBooks); replace the contact fallbacks below with the
+          firm's real portal sign-in and invoice URLs when available. */}
+      <section className="grid gap-5 md:grid-cols-2">
+        <div className={card}>
+          <p className={eyebrow}>Case Portal</p>
+          <h2 className="mt-2 font-serif text-xl font-bold text-slate-900">
+            Sign in to your secure portal
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Active clients access documents and case updates through our secure
+            portal. Use the sign-in link from your invitation email. If you need
+            it resent, call us at{" "}
+            <a href={telHref} className="font-semibold text-[#1a3a52] hover:underline">
+              {site.phone}
+            </a>
+            .
+          </p>
+        </div>
+        <div className={card}>
+          <p className={eyebrow}>Billing</p>
+          <h2 className="mt-2 font-serif text-xl font-bold text-slate-900">
+            Pay an invoice
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Invoices are sent by our billing team with a secure payment link. For
+            your security, we never collect payments directly through this
+            website. Need an invoice resent? Call{" "}
+            <a href={telHref} className="font-semibold text-[#1a3a52] hover:underline">
+              {site.phone}
+            </a>
+            .
+          </p>
+        </div>
+      </section>
 
       <section className="space-y-6">
         <div className="max-w-2xl">
