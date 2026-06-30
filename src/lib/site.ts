@@ -1,5 +1,16 @@
 import type { Locale } from "@/lib/i18n";
 
+// Structured address parts are the source of truth: the display string below is
+// derived from them, and schema.org PostalAddress (homepage JSON-LD) reads them
+// directly — so the firm's address never drifts between the two representations.
+const addressParts = {
+  street: "33505 W. 14 Mile Rd., Suite 20",
+  city: "Farmington Hills",
+  region: "MI",
+  postalCode: "48331",
+  country: "US",
+} as const;
+
 export const site = {
   name: "Mann Law Group",
   domain: "https://mannlawgrp.com",
@@ -9,7 +20,8 @@ export const site = {
   phone: "(248) 932-0990",
   fax: "(248) 932-4971",
   email: "info@mannlawgrp.com",
-  address: "33505 W. 14 Mile Rd., Suite 20, Farmington Hills, MI 48331",
+  addressParts,
+  address: `${addressParts.street}, ${addressParts.city}, ${addressParts.region} ${addressParts.postalCode}`,
   hours: [
     "Monday–Friday: 9:00 AM – 5:00 PM",
     "Saturday–Sunday: Closed",

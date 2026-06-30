@@ -96,6 +96,48 @@ export default async function LocaleHomePage({
     notFound();
   }
 
+  // schema.org LegalService — the firm's canonical business entity (NAP, hours,
+  // rating, social profiles). Other pages reference this via worksFor/provider;
+  // the stable @id lets search engines treat them as the same organization.
+  const legalServiceSchema = {
+    "@context": "https://schema.org",
+    "@type": "LegalService",
+    "@id": `${site.domain}/#organization`,
+    name: site.name,
+    url: `${site.domain}/${locale}`,
+    telephone: site.phone,
+    faxNumber: site.fax,
+    email: site.email,
+    image: `${site.domain}/images/team.jpg`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: site.addressParts.street,
+      addressLocality: site.addressParts.city,
+      addressRegion: site.addressParts.region,
+      postalCode: site.addressParts.postalCode,
+      addressCountry: site.addressParts.country,
+    },
+    areaServed: "United States",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "17:00",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: site.googleReviews.rating,
+      reviewCount: site.googleReviews.count,
+    },
+    sameAs: [
+      site.social.facebook,
+      site.social.instagram,
+      site.social.linkedin,
+      site.social.youtube,
+      site.googleReviews.url,
+    ],
+  };
+
   return (
     <>
       {/* 1. Hero — full-bleed background photo with navy overlay */}
@@ -304,6 +346,11 @@ export default async function LocaleHomePage({
         </div>
       </section>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}
+      />
     </>
   );
 }
