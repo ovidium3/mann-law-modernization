@@ -117,6 +117,11 @@ export default async function LocaleHomePage({
       postalCode: site.addressParts.postalCode,
       addressCountry: site.addressParts.country,
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: site.geo.latitude,
+      longitude: site.geo.longitude,
+    },
     areaServed: "United States",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

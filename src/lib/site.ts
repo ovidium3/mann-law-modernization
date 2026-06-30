@@ -22,6 +22,10 @@ export const site = {
   email: "info@mannlawgrp.com",
   addressParts,
   address: `${addressParts.street}, ${addressParts.city}, ${addressParts.region} ${addressParts.postalCode}`,
+  // Office coordinates (rooftop geocode of the street address). Feeds the
+  // schema.org GeoCoordinates in the homepage LegalService JSON-LD, which
+  // strengthens the local/map signal for the firm's location.
+  geo: { latitude: 42.527670, longitude: -83.380581 },
   hours: [
     "Monday–Friday: 9:00 AM – 5:00 PM",
     "Saturday–Sunday: Closed",
