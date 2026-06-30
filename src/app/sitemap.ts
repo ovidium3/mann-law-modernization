@@ -14,6 +14,7 @@ const paths = [
   "/about",
   "/about/beliefs",
   "/careers",
+  "/clients",
   "/faq",
   "/contact",
   "/privacy",

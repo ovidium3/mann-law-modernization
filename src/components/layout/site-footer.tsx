@@ -1,21 +1,13 @@
 import Link from "next/link";
 
 import { SocialLinks } from "@/components/layout/social-links";
+import { governmentResources } from "@/content/resources";
 import type { Locale } from "@/lib/i18n";
 import { getNavigation, site } from "@/lib/site";
 
 type SiteFooterProps = {
   locale: Locale;
 };
-
-// Official government resources commonly useful to immigration clients.
-const resourceLinks = [
-  { label: "USCIS Case Status", href: "https://egov.uscis.gov/casestatus/landing.do" },
-  { label: "USCIS Processing Times", href: "https://egov.uscis.gov/processing-times/" },
-  { label: "USCIS Office Locator", href: "https://www.uscis.gov/about-us/find-a-uscis-office/field-offices" },
-  { label: "DOS Visa Bulletin", href: "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" },
-  { label: "Visa Wait Times", href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/wait-times.html" },
-];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
   const navigation = getNavigation(locale);
@@ -77,7 +69,12 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         <div>
           <h3 className="text-sm font-semibold tracking-wide text-white uppercase">Resources</h3>
           <ul className="mt-3 space-y-2 text-sm">
-            {resourceLinks.map((item) => (
+            <li>
+              <Link href={`/${locale}/clients`} className="font-medium text-white transition hover:text-slate-200">
+                Client Resources
+              </Link>
+            </li>
+            {governmentResources.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
