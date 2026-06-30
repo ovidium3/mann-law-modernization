@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { isLocale, type Locale } from "@/lib/i18n";
+import { legalServiceNode } from "@/lib/schema";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -68,19 +69,15 @@ export default async function AboutPage({
     notFound();
   }
 
-  // AboutPage tied to the canonical firm entity published on the homepage,
-  // so search engines connect this page to the same organization.
+  // AboutPage whose mainEntity is the firm's complete canonical entity (shared
+  // with the homepage via the same @id). Google validates per-page and doesn't
+  // dereference @id across URLs, so the full node must appear here too.
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     name: `About ${site.name}`,
     url: `${site.domain}/${locale}/about`,
-    mainEntity: {
-      "@type": "LegalService",
-      "@id": `${site.domain}/#organization`,
-      name: site.name,
-      foundingDate: "1980",
-    },
+    mainEntity: legalServiceNode(locale),
   };
 
   const breadcrumbSchema = {

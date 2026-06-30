@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { isLocale, type Locale } from "@/lib/i18n";
+import { legalServiceNode } from "@/lib/schema";
 import { makeMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { ReviewsSection } from "@/components/reviews/reviews-section";
@@ -97,50 +98,11 @@ export default async function LocaleHomePage({
   }
 
   // schema.org LegalService — the firm's canonical business entity (NAP, hours,
-  // rating, social profiles). Other pages reference this via worksFor/provider;
-  // the stable @id lets search engines treat them as the same organization.
+  // rating, social profiles), shared from src/lib/schema.ts so every page that
+  // references #organization emits the same complete node.
   const legalServiceSchema = {
     "@context": "https://schema.org",
-    "@type": "LegalService",
-    "@id": `${site.domain}/#organization`,
-    name: site.name,
-    url: `${site.domain}/${locale}`,
-    telephone: site.phone,
-    faxNumber: site.fax,
-    email: site.email,
-    image: `${site.domain}/images/team.jpg`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: site.addressParts.street,
-      addressLocality: site.addressParts.city,
-      addressRegion: site.addressParts.region,
-      postalCode: site.addressParts.postalCode,
-      addressCountry: site.addressParts.country,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: site.geo.latitude,
-      longitude: site.geo.longitude,
-    },
-    areaServed: "United States",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "17:00",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: site.googleReviews.rating,
-      reviewCount: site.googleReviews.count,
-    },
-    sameAs: [
-      site.social.facebook,
-      site.social.instagram,
-      site.social.linkedin,
-      site.social.youtube,
-      site.googleReviews.url,
-    ],
+    ...legalServiceNode(locale),
   };
 
   return (
